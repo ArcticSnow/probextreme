@@ -1,10 +1,10 @@
-site_name: Mettools
+site_name: Probextreme
 site_url: https://github.com/ArcticSnow/probextreme
-site_author: Simon Filhol
-copyright: MIT License
+site_author: Simon Filhol, François Doussot
+copyright: GNUv3 License
 nav:
   - Home: index.md
-  - Probability: probability.md
+  - Probextreme: probextreme.md
   - API:
       - Frequentist: api/probextreme.frequentist_extreme.md
       - Bayesian: api/probextreme.bayesian_extreme.md
