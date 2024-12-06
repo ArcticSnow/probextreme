@@ -1,7 +1,7 @@
 # Probextreme
-Python Toolbox for Extreme Event Characterisation
+Python Library for Extreme Event Characterisation
 
-**This toolbox is under construction and currently designed for specific projects**
+**This library is under construction and currently designed for specific projects**
 
 ## Installation
 
