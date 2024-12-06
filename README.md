@@ -23,7 +23,7 @@ mkdocs serve
 ## ToDo
 ### Short term
 - [ ] add Bayesian temporal dependencies
-- [ ] add example notebooks (see Bérarde cases)
+- [ ] add example notebooks (see Bérarde cases). Provide sample datasets
 - [ ] add Bayesian Pareto 
 - [ ] add Mann-Kendall test for trend significance
 - [ ] add trends fitting
