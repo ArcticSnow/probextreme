@@ -36,5 +36,3 @@ For further information on documentation tools:
 ## Credits
 
 S. Filhol, F. Doussot, - May 2024
-
-CNRM/Centre d'Etudes de la Neige - Météo-France/CNRS
