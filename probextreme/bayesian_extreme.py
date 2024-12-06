@@ -13,7 +13,7 @@ from . import utils
 
 def bayesian_stationary_gev(ts, return_periods=np.array([2,5,10,20,50,100]), return_levels=11):
     """
-    Function to fit GEV using the Bayesian approach. This model assume data stationarity
+    Function to fit GEV using the Bayesian approach. This model assumes data stationarity
 
     Args:
         ts (timeseries, array): data to be fitted by stationary GEV
@@ -23,6 +23,7 @@ def bayesian_stationary_gev(ts, return_periods=np.array([2,5,10,20,50,100]), ret
     Return:
         model, idata, scaler
     """
+
     scaler = utils.StandardScaler()
     scaler.fit(ts)
     zdata = scaler.transform(ts)

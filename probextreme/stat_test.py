@@ -13,7 +13,7 @@ def visualize_signal_stationarity(data, freq=10):
 	Function to quickly visualize stationarity of the data using rolling mean, median and standard deviation
 	"""
 
-	fig, ax = plt.subplots(2,1, sharex=True)
+	fig, ax = plt.subplots(2,1, sharex=True, figsize=(12,8))
 	ax[0].plot(data.rolling(freq, center=True).median(), label='median')
 	ax[0].plot(data.rolling(freq, center=True).mean(), label='mean')
 	ax[1].plot(data.rolling(freq, center=True).std())
@@ -21,10 +21,12 @@ def visualize_signal_stationarity(data, freq=10):
 	ax[0].grid(linestyle='--', alpha=0.5)	
 	ax[1].grid(linestyle='--', alpha=0.5)
 
-	ax[0].set_ylabel(f"Rolling mean & median (window={freq})")
-	ax[1].set_ylabel(f"Rolling variance (window={freq})")
+	ax[0].set_ylabel(f"Rolling mean & median\n(window={freq})")
+	ax[1].set_ylabel(f"Rolling variance\n(window={freq})")
 
 	ax[0].legend()
+
+	return fig, ax
 
 
 
@@ -48,13 +50,13 @@ def adfuller_test(data, significance_level=0.05):
 	print('p-value:', result[1])
 	print('Critical Values:')
 	for key, value in result[4].items():
-	    print('\t%s: %.3f' % (key, value))
+		print('\t%s: %.3f' % (key, value))
 
 	print("-- Null hypothesis:  the data has a unit root and is non-stationary --")
-	if p_value > significance_level:
-	    print("Fail to reject the null hypothesis: => the data has a unit root and is non-stationary")
+	if result[1] > significance_level:
+		print("Fail to reject the null hypothesis: => the data has a unit root and is non-stationary")
 	else:
-	    print("Reject the null hypothesis: => the data does not have a unit root and is stationary")
+		print("Reject the null hypothesis: => the data does not have a unit root and is stationary")
 
 
 # test stationarity of variance
@@ -89,6 +91,6 @@ def levene_test(data, split_index=None, significance_level=0.05):
 
 	print("-- Null hypothesis: Variances are equal --")
 	if p_value > significance_level:
-	    print("Fail to reject the null hypothesis: => Variances are equal over the two data bloc.")
+		print("Fail to reject the null hypothesis: => Variances are equal over the two data bloc.")
 	else:
-	    print("Reject the null hypothesis: => Variances are changing over time.")
+		print("Reject the null hypothesis: => Variances are changing over time.")
