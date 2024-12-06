@@ -57,6 +57,7 @@ setup(
                       'pandas',
                       'matplotlib',
                       'scipy',
+                      'statsmodels',
                       'numpy==1.26.0',    #  topocalc is having problem with numpy>=2.0.0
                       'netcdf4',
                       'h5netcdf',
