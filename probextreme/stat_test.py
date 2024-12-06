@@ -1,6 +1,6 @@
 """
 Collection of statistical test usefull to caracterise the data
-S. Filhol
+S. Filhol, December 2024
 
 """
 import matplotlib.pyplot as plt
@@ -18,7 +18,7 @@ def visualize_signal_stationarity(data, freq=10):
 	ax[0].plot(data.rolling(freq, center=True).mean(), label='mean')
 	ax[1].plot(data.rolling(freq, center=True).std())
 
-	ax[0].grid(linestyle='--', alpha=0.5)
+	ax[0].grid(linestyle='--', alpha=0.5)	
 	ax[1].grid(linestyle='--', alpha=0.5)
 
 	ax[0].set_ylabel(f"Rolling mean & median (window={freq})")
@@ -29,12 +29,13 @@ def visualize_signal_stationarity(data, freq=10):
 
 
 # test stationarity of data
-def adfuller_test(data):
+def adfuller_test(data, significance_level=0.05):
 	"""
 	Perform an Augmented Dicker-Fuller test for testing the stationarity of a signal
 	
 	Args:
 		data (array or timeseries): data to test
+		significance_level (float): significance level to compare P-value. Default is 0.05
 
 	External resource: https://en.wikipedia.org/wiki/Augmented_Dickey%E2%80%93Fuller_test
 	"""
@@ -50,20 +51,21 @@ def adfuller_test(data):
 	    print('\t%s: %.3f' % (key, value))
 
 	print("-- Null hypothesis:  the data has a unit root and is non-stationary --")
-	if p_value > 0.05:
+	if p_value > significance_level:
 	    print("Fail to reject the null hypothesis: => the data has a unit root and is non-stationary")
 	else:
 	    print("Reject the null hypothesis: => the data does not have a unit root and is stationary")
 
 
 # test stationarity of variance
-def levene_test(data, split_index=None):
+def levene_test(data, split_index=None, significance_level=0.05):
 	"""
 	It tests the null hypothesis that the population variances are equal
 
 	Args:
 		data (array or timeseries): data to test
 		split_index (int): index to split the data in two distinct groups
+		significance_level (float): significance level to compare P-value. Default is 0.05
 
 	External resource: https://en.wikipedia.org/wiki/Levene%27s_test
 	"""
@@ -86,7 +88,7 @@ def levene_test(data, split_index=None):
 	print('p-value:', p_value)
 
 	print("-- Null hypothesis: Variances are equal --")
-	if p_value > 0.05:
+	if p_value > significance_level:
 	    print("Fail to reject the null hypothesis: => Variances are equal over the two data bloc.")
 	else:
 	    print("Reject the null hypothesis: => Variances are changing over time.")

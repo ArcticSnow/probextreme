@@ -10,6 +10,7 @@
 **Global Variables**
 ---------------
 - **frequentist_extreme**
+- **utils**
 
 
 

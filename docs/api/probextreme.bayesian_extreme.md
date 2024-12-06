@@ -3,14 +3,12 @@
 <a href="../../probextreme/bayesian_extreme.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 # <kbd>module</kbd> `probextreme.bayesian_extreme`
-
-
-
+Functionalities using Bayesian approch for extreme value analysis 
 
 
 ---
 
-<a href="../../probextreme/bayesian_extreme.py#L8"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L14"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `bayesian_stationary_gev`
 
@@ -22,9 +20,17 @@ bayesian_stationary_gev(
 )
 ```
 
+Function to fit GEV using the Bayesian approach. This model assume data stationarity 
 
 
 
+**Args:**
+ 
+ - <b>`ts`</b> (timeseries, array):  data to be fitted by stationary GEV 
+ - <b>`return_periods`</b> (int array):  return period to compute return level for 
+ - <b>`return_levels`</b> (int, array):  return level to compute return period for 
+
+Return: model, idata, scaler 
 
 
 

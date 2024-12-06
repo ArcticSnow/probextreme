@@ -1,12 +1,29 @@
+"""
+Functionalities using Bayesian approch for extreme value analysis
+
+"""
+
 import numpy as np
 import arviz as az
 import pymc as pm
 import pymc_experimental.distributions as pmx
 import pytensor.tensor as pt
-from . import frequentist_extreme as fe
+from . import utils
+
 
 def bayesian_stationary_gev(ts, return_periods=np.array([2,5,10,20,50,100]), return_levels=11):
-    scaler = fe.StandardScaler()
+    """
+    Function to fit GEV using the Bayesian approach. This model assume data stationarity
+
+    Args:
+        ts (timeseries, array): data to be fitted by stationary GEV
+        return_periods (int array): return period to compute return level for
+        return_levels (int, array): return level to compute return period for
+
+    Return:
+        model, idata, scaler
+    """
+    scaler = utils.StandardScaler()
     scaler.fit(ts)
     zdata = scaler.transform(ts)
     p_vec = 1/return_periods
@@ -30,7 +47,6 @@ def bayesian_stationary_gev(ts, return_periods=np.array([2,5,10,20,50,100]), ret
         period = pm.Deterministic("return_period",
                                   1/(1-pm.math.exp(pmx.GenExtreme.logcdf(ret, mu=μ, sigma=σ, xi=ξ))),
                                   dims='return_level')
-
 
 
     idata = pm.sample_prior_predictive(samples=1000, model=model)

@@ -8,6 +8,8 @@ nav:
   - API:
       - Frequentist: api/probextreme.frequentist_extreme.md
       - Bayesian: api/probextreme.bayesian_extreme.md
+      - Statiscal test: api/probextreme.stat_test.md
+      - Utils: api/probextreme.utils.md
 theme:
   name: material
   palette:
