@@ -10,7 +10,7 @@ with open(path.join(this_directory, 'README.md')) as f:
 setup(
     name='probextreme',
     version='0.0.1',
-    description='Python toolbox for Extreme event caracterisation',
+    description='Python toolbox for Extreme event characterisation',
     long_description=long_description,
 
     # The project's main homepage.
@@ -50,7 +50,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords=['climate', 'meteorology', 'extreme'],
+    keywords=['climate', 'meteorology', 'extreme', 'statistics'],
     packages=find_packages(),
     python_requires='>=3.10',
     install_requires=['xarray[complete]',

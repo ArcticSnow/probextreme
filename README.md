@@ -1,10 +1,9 @@
 # Probextreme
-Python toolbox for Extreme event caracterisation
+Python Toolbox for Extreme Event Characterisation
 
 **This toolbox is under construction and currently designed for specific projects**
 
 ## Installation
-
 
 ```bash
 git clone https://github.com/ArcticSnow/probextreme.git
@@ -21,3 +20,14 @@ pip install mkdocs
 mkdocs serve
 ```
 
+## ToDo
+### Short term
+- [ ] add Bayesian temporal dependencies
+- [ ] add example notebooks (see Bérarde cases)
+- [ ] add Bayesian Pareto 
+- [ ] add Mann-Kendall test for trend significance
+- [ ] add trends fitting
+
+### Long term development
+- seasonal extremes
+- Bayesian plotting

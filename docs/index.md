@@ -1,7 +1,6 @@
 # Welcome to Probextreme
 
-This is a collection of personalized tools to work Extreme Values. The toolbox is designed to gather different approaches and tools to caracterise extreme events and their significance. 
-
+This is a collection of personalized tools to work Extreme Values. The toolbox is designed to gather different approaches and tools to characterise extreme events and their significance. 
 
 **This toolbox is under construction and currently designed for specific projects**
 
