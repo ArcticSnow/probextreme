@@ -1,0 +1,23 @@
+site_name: Mettools
+site_url: https://github.com/ArcticSnow/probextreme
+site_author: Simon Filhol
+copyright: MIT License
+nav:
+  - Home: index.md
+  - Probability: probability.md
+  - API:
+      - Frequentist: api/probextreme.frequentist_extreme.md
+      - Bayesian: api/probextreme.bayesian_extreme.md
+theme:
+  name: material
+  palette:
+    primary: teal
+markdown_extensions:
+  - md_in_html
+  - attr_list
+  - pymdownx.highlight:
+      use_pygments: true
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
