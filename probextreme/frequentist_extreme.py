@@ -16,7 +16,7 @@ from scipy import stats
 
 class extreme_values:
     def __init__(self,ts,
-                 BM_window='364.25D',
+                 BM_window='365.25D',
                  origin_BM='start',
                  POT_threshold=None,
                  mtd='96H',
@@ -53,9 +53,8 @@ class extreme_values:
             if POT_threshold is None:
                 POT_threshold = np.percentile(ts, 75)
             self.ts_POT = get_POT_values(ts, threshold = POT_threshold , mtd = mtd)
-
-            self.gpd = model(self.ts_POT, model_type = 'gpd')
             self.gpd.threshold = POT_threshold
+            self.gpd = model(self.ts_POT, model_type = 'gpd')
             self.gpd.nb_years = ts.index.max().year - ts.index.min().year
 
             self.gpd.fit_distribution(verbose=self.verbose)
@@ -77,13 +76,13 @@ class extreme_values:
             getattr(self, mod).color = model_colormap.get(mod)
             getattr(self, mod).marker = model_marker_type.get(mod)
 
-    def redefine_threshold(self,POT_threshold):
+    def redefine_threshold(self,threshold):
         if self.verbose:
-            print(f"\n---> The threshold has been set to be {POT_threshold:4.2f}")
-        self.ts_POT = get_POT_values(self.ts, threshold=POT_threshold, mtd=self.mtd)
-        self.gpd.threshold = POT_threshold
-        self.gpd.fit_distribution(verbose=self.verbose)
-
+            print(f"\n---> The threshold has been set to be {threshold:4.2f}")
+        self.ts_POT = get_POT_values(self.ts, threshold=threshold, mtd=self.mtd)
+        self.gpd.threshold = threshold
+        self.gpd = model(self.ts_POT, model_type='gpd')
+        self.gpd.fit_distribution(verbose=False)
 
     def find_POT_threshold(self, threshold_range = None, mtd = None, plot = 'plt', nb_peaks_min=None):
         """
@@ -104,10 +103,12 @@ class extreme_values:
             threshold_range = np.linspace(min_threshold, max_threshold, 100)
         if nb_peaks_min is None:
             nb_peaks_min = int(self.gpd.nb_years/4)
-
+        #for mean residual life plot :
         mean_excess = []
         threshold_limited = []
+        #for QQ-plot :
         df = pd.DataFrame(index=threshold_range, columns=['R2', 'nb_peaks'])
+        print(threshold_range)
 
         for threshold in threshold_range :
             # Mean Residual life plot :
@@ -126,6 +127,7 @@ class extreme_values:
                 break
         df.fillna(0)
         df['R2_float'] = df['R2'].astype('float64')
+        print(df)
         opt_threshold = df['R2_float'].idxmax()
 
         #set the best value :
@@ -144,11 +146,9 @@ class extreme_values:
             plt.show()
         return opt_threshold
 
-
     def get_return_levels(self, return_periods=None):
         """
         Function to compute return levels for given return periods
-
         Args:
             return_periods (float): numpy array of return periods
         """
@@ -167,7 +167,6 @@ class extreme_values:
     def execute_bootstrapping(self, n_iterations=1000, confidence=95):
         """
         Function to compute bootstrapping method to derive confidence intervals of return levels and return periods
-
         Args:
             n_iterations (int): number of boostrap iteration
             confidence (float): confidence level. between 0 and 100%
@@ -220,7 +219,7 @@ class extreme_values:
     def plot_distribution(self, ax):
         h1 = None
 
-        if 'gev' or 'gumbel' in self.models:
+        if ('gev' or 'gumbel') in self.models:
             mod = [item for item in ['gev','gumbel'] if item in self.models][0]
             ax.hist(self.ts_BM, bins=30, density=True, alpha=0.5, color=getattr(self, mod).color, edgecolor=None, label = 'BM values', zorder=0)
         if 'gpd' in self.models:
@@ -254,7 +253,7 @@ class extreme_values:
 
     def plot_extremes(self):
         plt.plot(self.ts.index, self.ts, color="b", label='time serie', lw=1, alpha = 0.5)
-        if 'gev' or 'gumbel' in self.models:
+        if ('gev' or 'gumbel') in self.models:
             mod = [item for item in ['gev','gumbel'] if item in self.models][0]
             plt.scatter(self.ts_BM.index, self.ts_BM, marker="o", color=getattr(self, mod).color, label="BM values")
         if 'gpd' in self.models:
@@ -333,7 +332,6 @@ class model:
         self.levels_conf_int = None
         self.periods_conf_int = None
         self.bootstrap_samples = None
-
 
     def fit_distribution(self, verbose=True, **kwargs):
         if self.model_type.lower() == 'gev' :
