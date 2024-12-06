@@ -1,8 +1,8 @@
 # Welcome to Probextreme
 
-This is a collection of personalized tools to work Extreme Values. The toolbox is designed to gather different approaches and tools to characterise extreme events and their significance. 
+This is a library to work Extreme Values theory. The toolbox is designed to gather different approaches and tools to characterise extreme events and their significance. 
 
-**This toolbox is under construction and currently designed for specific projects**
+**This library is under construction and currently designed for specific projects**
 
 ```bash
 git clone https://github.com/ArcticSnow/probextreme.git
