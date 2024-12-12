@@ -69,9 +69,22 @@ def bayesian_stationary_gev(ts, return_periods=np.array([2,5,10,20,50,100]), ret
 
     return model, idata, scaler
 
-class bayesian_extreme:
+class Bayesian_Extreme:
     """
     Class to perform bayesian modeling of extreme values with by default time dependence
+
+    Attributes:
+        ts (timeseries or dataframe): time series of maximum. Default model is GEV so ts must contain block maximum values
+        scaler (obj): scaling object. See utils.py
+        
+    Methods:
+        scale_data()
+        assess_stationarity(test=['adfuller', 'ADFuller variance'], freq=30)
+        default_gev_model()
+        sample_prior(samples=1000)
+        infer_posterior(samples=2000)
+        evaluate_posterior()
+
     """
     def __init__(self, ts, scaler=utils.StandardScaler()):
         self.model = None
