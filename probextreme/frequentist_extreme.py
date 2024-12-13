@@ -53,8 +53,9 @@ class extreme_values:
             if POT_threshold is None:
                 POT_threshold = np.percentile(ts, 75)
             self.ts_POT = get_POT_values(ts, threshold = POT_threshold , mtd = mtd)
-            self.gpd.threshold = POT_threshold
             self.gpd = model(self.ts_POT, model_type = 'gpd')
+            self.gpd.threshold = POT_threshold
+
             self.gpd.nb_years = ts.index.max().year - ts.index.min().year
 
             self.gpd.fit_distribution(verbose=self.verbose)

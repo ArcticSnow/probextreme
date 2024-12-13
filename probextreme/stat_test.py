@@ -12,18 +12,23 @@ def visualize_signal_stationarity(data, freq=10):
 	"""
 	Function to quickly visualize stationarity of the data using rolling mean, median and standard deviation
 	"""
+	dmean = data.rolling(freq, center=True).mean()
 
 	fig, ax = plt.subplots(2,1, sharex=True, figsize=(12,8))
+	ax[0].fill_between(data.index,
+					   dmean - data.rolling(freq, center=True).std(),
+					   dmean + data.rolling(freq, center=True).std(),
+					   alpha=0.2, label="standard deviation")
+
 	ax[0].plot(data.rolling(freq, center=True).median(), label='median')
 	ax[0].plot(data.rolling(freq, center=True).mean(), label='mean')
-	ax[1].plot(data.rolling(freq, center=True).std())
+	ax[1].plot(data.rolling(freq, center=True).var())
 
-	ax[0].grid(linestyle='--', alpha=0.5)	
+	ax[0].grid(linestyle='--', alpha=0.5)
 	ax[1].grid(linestyle='--', alpha=0.5)
 
 	ax[0].set_ylabel(f"Rolling mean & median\n(window={freq})")
 	ax[1].set_ylabel(f"Rolling variance\n(window={freq})")
-
 	ax[0].legend()
 
 	return fig, ax
