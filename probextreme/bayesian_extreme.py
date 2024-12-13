@@ -69,6 +69,53 @@ def bayesian_stationary_gev(ts, return_periods=np.array([2,5,10,20,50,100]), ret
 
     return model, idata, scaler
 
+def model_gpd_linear(zdata):
+    print("ERROR: To be implemented")
+    pass
+
+
+def model_gev_linear(zdata):
+    """
+    A Bayesian GEV model with Loc and Shape being linearly time dependent
+
+    Args:
+        zdata (array): standardized data to use for Bayesian inference
+
+    Returns:
+        model (pymc model)
+    """
+    with pm.Model() as model:
+
+        # define time and return period to compute
+        t_vec = np.arange(len(zdata))
+        p_vec = 1/np.array([2,5,10,20,50,100,200])
+        ps_vec = (np.zeros((len(p_vec), len(zdata)))+1).T* p_vec
+
+        # Dimensions
+        t = pm.Data('t', t_vec.T, dims='time')
+        p = pm.Data('p', ps_vec.T, dims=['probability','time'])
+
+        # Priors
+        alpha_mu = pm.Normal("alpha_mu", mu=-0.5, sigma=1)
+        beta_mu = pm.Normal("beta_mu", mu=0, sigma=1)
+        alpha_sig = pm.Normal("alpha_sig", mu=0, sigma=1)
+        beta_sig = pm.Normal("beta_sig", mu=0, sigma=1)
+
+        sig_raw = alpha_sig + beta_sig * t
+        sig = pm.Deterministic("sig", pm.math.switch(sig_raw > 0, sig_raw, 0), dims='time')
+
+        mu = pm.Deterministic("mu", alpha_mu + beta_mu * t , dims='time')
+        xi = pm.TruncatedNormal("xi", mu=0, sigma=0.2, lower=-0.6, upper=0.6)
+
+        # Estimation
+        gev = pmx.GenExtreme("gev", mu=mu, sigma=sig, xi=xi, observed=zdata, dims='time')
+
+        # Return level
+        z_p = pm.Deterministic("z_p",  mu - sig / xi * (1 - (-pm.math.log(1 - p)) ** (-xi)),  dims=['probability', 'time'])
+
+    return model
+
+
 class Bayesian_Extreme:
     """
     Class to perform bayesian modeling of extreme values with by default time dependence
@@ -76,7 +123,7 @@ class Bayesian_Extreme:
     Attributes:
         ts (timeseries or dataframe): time series of maximum. Default model is GEV so ts must contain block maximum values
         scaler (obj): scaling object. See utils.py
-        
+
     Methods:
         scale_data()
         assess_stationarity(test=['adfuller', 'ADFuller variance'], freq=30)
@@ -118,35 +165,7 @@ class Bayesian_Extreme:
 
     def default_gev_model(self):
 
-        # a model with Loc and Shape being time dependent
-        with pm.Model() as self.model:
-
-            # define time and return period to compute
-            t_vec = np.arange(len(self.zdata))
-            p_vec = 1/np.array([2,5,10,20,50,100,200])
-            ps_vec = (np.zeros((len(p_vec), len(self.zdata)))+1).T* p_vec
-
-            # Dimensions
-            t = pm.Data('t', t_vec.T, dims='time')
-            p = pm.Data('p', ps_vec.T, dims=['probability','time'])
-
-            # Priors
-            alpha_mu = pm.Normal("alpha_mu", mu=-0.5, sigma=1)
-            beta_mu = pm.Normal("beta_mu", mu=0, sigma=1)
-            alpha_sig = pm.Normal("alpha_sig", mu=0, sigma=1)
-            beta_sig = pm.Normal("beta_sig", mu=0, sigma=1)
-
-            sig_raw = alpha_sig + beta_sig * t
-            sig = pm.Deterministic("sig", pm.math.switch(sig_raw > 0, sig_raw, 0), dims='time')
-
-            mu = pm.Deterministic("mu", alpha_mu + beta_mu * t , dims='time')
-            xi = pm.TruncatedNormal("xi", mu=0, sigma=0.2, lower=-0.6, upper=0.6)
-
-            # Estimation
-            gev = pmx.GenExtreme("gev", mu=mu, sigma=sig, xi=xi, observed=zdata, dims='time')
-
-            # Return level
-            z_p = pm.Deterministic("z_p",  mu - sig / xi * (1 - (-pm.math.log(1 - p)) ** (-xi)),  dims=['probability', 'time'])
+        self.model = model_gev_linear(self.zdata)
 
 
     def sample_prior(self, samples=1000):
@@ -173,3 +192,6 @@ class Bayesian_Extreme:
         fig, ax = plt.subplots(1,2, figsize=(12, 3))
         az.plot_bpv(self.idata,  kind="t_stat", t_stat=lambda x:np.percentile(x, q=50, axis=-1), ax=ax[0])
         az.plot_loo_pit(idata=self.idata, y="gev", ecdf=True, ax=ax[1])
+
+    def plot_posterior(self, var_to_plot=["alpha_mu", "beta_mu", "alpha_sig", "beta_sig", "ξ", "μ", "σ"]):
+        az.plot_trace(self.idata, var_names=var_to_plot,  figsize=(12, 12));

@@ -1,9 +1,11 @@
 # Welcome to Probextreme
 
-This is a library to work Extreme Values theory. The toolbox is designed to gather different approaches and tools to characterise extreme events and their significance. 
+This is a library to work with the Extreme Values Theory (EVT). The toolbox is designed to gather different approaches and tools to characterise extreme events and their significance based on data.
 
-**This library is under construction and currently designed for specific projects**
+**This library is under construction**
 
+
+## Installation
 ```bash
 git clone https://github.com/ArcticSnow/probextreme.git
 

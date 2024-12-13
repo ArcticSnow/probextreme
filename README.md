@@ -1,7 +1,9 @@
 # Probextreme
-Python Library for Extreme Event Characterisation
+Python Library for Extreme Event Characterisation.
 
-**This library is under construction and currently designed for specific projects**
+See documentation: https://probextreme.readthedocs.io/en/latest/
+
+**This library is under construction**
 
 ## Installation
 
@@ -22,7 +24,7 @@ mkdocs serve
 
 ## ToDo
 ### Short term
-- [ ] add Bayesian temporal dependencies
+- [x] add Bayesian temporal dependencies
 - [ ] add example notebooks (see Bérarde cases). Provide sample datasets
 - [ ] add Bayesian Pareto 
 - [ ] add Mann-Kendall test for trend significance

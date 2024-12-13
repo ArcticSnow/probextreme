@@ -21,7 +21,7 @@ Function to quickly visualize stationarity of the data using rolling mean, media
 
 ---
 
-<a href="../../probextreme/stat_test.py#L32"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/stat_test.py#L34"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `adfuller_test`
 
@@ -43,7 +43,7 @@ External resource: https://en.wikipedia.org/wiki/Augmented_Dickey%E2%80%93Fuller
 
 ---
 
-<a href="../../probextreme/stat_test.py#L61"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/stat_test.py#L63"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `levene_test`
 

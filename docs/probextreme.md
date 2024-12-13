@@ -1,6 +1,5 @@
 # Extreme Probability Modeling
 
-
 The module `from probextreme import frequentist_extreme as fe` allows to analyse a dataset under the scope of Extreme Value Theory using a frequentist approach. 
 
 
