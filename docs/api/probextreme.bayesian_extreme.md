@@ -77,7 +77,7 @@ A Bayesian GEV model with Loc and Shape being linearly time dependent
 <a href="../../probextreme/bayesian_extreme.py#L119"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>class</kbd> `Bayesian_Extreme`
-Class to perform bayesian modeling of extreme values with by default time dependence 
+Class to perform bayesian modeling of extreme values with by default time dependence. This class is wrapper of PyMC method and intends to provide a basic model. For advanced controls on the parameters, refer to PyMC methods on top of which this class is built. 
 
 
 
@@ -88,12 +88,12 @@ Class to perform bayesian modeling of extreme values with by default time depend
 
 Methods: scale_data() assess_stationarity(test=['adfuller', 'ADFuller variance'], freq=30) default_gev_model() sample_prior(samples=1000) infer_posterior(samples=2000) evaluate_posterior() 
 
-<a href="../../probextreme/bayesian_extreme.py#L136"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L137"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `__init__`
 
 ```python
-__init__(ts, scaler=<probextreme.utils.StandardScaler object at 0x7bfe28d14040>)
+__init__(ts, scaler=<probextreme.utils.StandardScaler object at 0x7014ab6d4040>)
 ```
 
 
@@ -105,7 +105,7 @@ __init__(ts, scaler=<probextreme.utils.StandardScaler object at 0x7bfe28d14040>)
 
 ---
 
-<a href="../../probextreme/bayesian_extreme.py#L148"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L149"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `assess_stationarity`
 
@@ -119,7 +119,7 @@ assess_stationarity(test=['adfuller', 'ADFuller variance'], freq=30)
 
 ---
 
-<a href="../../probextreme/bayesian_extreme.py#L166"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L167"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `default_gev_model`
 
@@ -133,7 +133,7 @@ default_gev_model()
 
 ---
 
-<a href="../../probextreme/bayesian_extreme.py#L188"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L192"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `evaluate_posterior`
 
@@ -147,12 +147,15 @@ evaluate_posterior()
 
 ---
 
-<a href="../../probextreme/bayesian_extreme.py#L176"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L177"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `infer_posterior`
 
 ```python
-infer_posterior(samples=2000)
+infer_posterior(
+    samples=2000,
+    initvals={'alpha_mu': -0.5, 'beta_mu': 0, 'alpha_sig': 0, 'beta_sig': 0, 'ξ': 0}
+)
 ```
 
 
@@ -161,7 +164,7 @@ infer_posterior(samples=2000)
 
 ---
 
-<a href="../../probextreme/bayesian_extreme.py#L196"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L200"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `plot_posterior`
 
@@ -177,7 +180,7 @@ plot_posterior(
 
 ---
 
-<a href="../../probextreme/bayesian_extreme.py#L171"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L172"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `sample_prior`
 
@@ -191,7 +194,7 @@ sample_prior(samples=1000)
 
 ---
 
-<a href="../../probextreme/bayesian_extreme.py#L145"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../../probextreme/bayesian_extreme.py#L146"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `scale_data`
 

@@ -118,7 +118,8 @@ def model_gev_linear(zdata):
 
 class Bayesian_Extreme:
     """
-    Class to perform bayesian modeling of extreme values with by default time dependence
+    Class to perform bayesian modeling of extreme values with by default time dependence.
+    This class is wrapper of PyMC method and intends to provide a basic model. For advanced controls on the parameters, refer to PyMC methods on top of which this class is built.
 
     Attributes:
         ts (timeseries or dataframe): time series of maximum. Default model is GEV so ts must contain block maximum values
@@ -173,13 +174,16 @@ class Bayesian_Extreme:
         self.idata = pm.sample_prior_predictive(samples=samples, model=self.model)
 
 
-    def infer_posterior(self, samples=2000):
+    def infer_posterior(self,
+                        samples=2000,
+                        initvals={"alpha_mu": -0.5, "beta_mu":0,"alpha_sig": 0, "beta_sig":0, "ξ":0 }):
         with self.model:
             self.trace = pm.sample(
                 samples,
                 cores=4,
                 chains=4,
                 tune=2000,
+                initvals=initvals,
                 target_accept=0.98,
             )
         # add trace to existing idata object
