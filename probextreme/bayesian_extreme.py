@@ -176,7 +176,7 @@ class Bayesian_Extreme:
 
     def infer_posterior(self,
                         samples=2000,
-                        initvals={"alpha_mu": -0.5, "beta_mu":0,"alpha_sig": 0, "beta_sig":0, "ξ":0 }):
+                        initvals={"alpha_mu": -0.5, "beta_mu":0, "alpha_sig": 0, "beta_sig":0, "xi":0 }):
         with self.model:
             self.trace = pm.sample(
                 samples,
@@ -197,5 +197,5 @@ class Bayesian_Extreme:
         az.plot_bpv(self.idata,  kind="t_stat", t_stat=lambda x:np.percentile(x, q=50, axis=-1), ax=ax[0])
         az.plot_loo_pit(idata=self.idata, y="gev", ecdf=True, ax=ax[1])
 
-    def plot_posterior(self, var_to_plot=["alpha_mu", "beta_mu", "alpha_sig", "beta_sig", "ξ", "μ", "σ"]):
+    def plot_posterior(self, var_to_plot=["alpha_mu", "beta_mu", "alpha_sig", "beta_sig", "xi", "mu", "sig"]):
         az.plot_trace(self.idata, var_names=var_to_plot,  figsize=(12, 12));
