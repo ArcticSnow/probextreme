@@ -78,12 +78,18 @@ class extreme_values:
             getattr(self, mod).marker = model_marker_type.get(mod)
 
     def redefine_threshold(self,threshold):
+        color = self.gpd.color
+        nb_years = self.gpd.nb_years
+        marker = self.gpd.marker
         if self.verbose:
             print(f"\n---> The threshold has been set to be {threshold:4.2f}")
         self.ts_POT = get_POT_values(self.ts, threshold=threshold, mtd=self.mtd)
-        self.gpd.threshold = threshold
         self.gpd = model(self.ts_POT, model_type='gpd')
+        self.gpd.threshold = threshold
         self.gpd.fit_distribution(verbose=False)
+        self.gpd.color = color
+        self.gpd.nb_years = nb_years
+        self.gpd.marker = marker
 
     def find_POT_threshold(self, threshold_range = None, mtd = None, plot = 'plt', nb_peaks_min=None):
         """
@@ -109,7 +115,6 @@ class extreme_values:
         threshold_limited = []
         #for QQ-plot :
         df = pd.DataFrame(index=threshold_range, columns=['R2', 'nb_peaks'])
-        print(threshold_range)
 
         for threshold in threshold_range :
             # Mean Residual life plot :
@@ -122,13 +127,12 @@ class extreme_values:
             self.redefine_threshold(threshold)
             r2 = self.plot_QQ_plot(plot = None, models = ['gpd'])
             nb_peaks = self.ts_POT.shape[0]
-            df['R2'].loc[threshold] = r2
-            df['nb_peaks'].loc[threshold] = int(nb_peaks)
+            df.loc[threshold,'R2'] = r2
+            df.loc[threshold,'nb_peaks'] = int(nb_peaks)
             if (nb_peaks < nb_peaks_min):
                 break
         df.fillna(0)
         df['R2_float'] = df['R2'].astype('float64')
-        print(df)
         opt_threshold = df['R2_float'].idxmax()
 
         #set the best value :
