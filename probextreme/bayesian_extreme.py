@@ -134,14 +134,15 @@ class Bayesian_Extreme:
         evaluate_posterior()
 
     """
-    def __init__(self, ts, scaler=utils.StandardScaler()):
+    def __init__(self, ts, ):
         self.model = None
         self.idata = None
         self.trace = None
 
         self.ts = ts
         self.zdata = None
-        self.scaler = scaler
+        self.scaler = utils.StandardScaler()
+        self.scaler.__init__()
 
     def scale_data(self):
         self.zdata = self.scaler.fit_transform(self.ts)
